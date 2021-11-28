@@ -1,6 +1,10 @@
-###MVC
+###MVC - Model - View - Controller
 
-view - view for end user
-controller - responsible for returning the view
-service - app logic
-repo - stores/retrieves the data
+- View
+- Controller
+- Model
+
+- View: view for end user
+- Controller: responsible for returning the view
+- Service: application logic
+- Repository: stores/retrieves the data
