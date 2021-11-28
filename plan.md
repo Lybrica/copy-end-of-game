@@ -29,7 +29,7 @@ Subject:
    2. Plan possible incomes
    3. Loan calculator
 5. visual stats
-   1. Comparing of incomes and expenses on pie charts
+   1. Comparing of income and expense on pie charts
 
 ###Technical requirements
 1. Heroku cloud deploy
