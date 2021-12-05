@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -43,9 +44,10 @@ public class CategoryController {
     }
 
     @PostMapping("/categories")
-    public void createNewCategory(@RequestBody CategorySummary newCategory) {
+    public ResponseEntity<CategorySummary> createNewCategory(@RequestBody CategorySummary newCategory) {
         log.info("trying to create new category from request object: [{}]", newCategory);
 
-        service.createNewCategory(newCategory);
+        var createdCategory = service.createNewCategory(newCategory);
+        return ResponseEntity.created(URI.create("/categories/" + createdCategory.id())).body(createdCategory);
     }
 }
