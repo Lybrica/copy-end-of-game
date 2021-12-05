@@ -7,6 +7,7 @@ import com.example.endofgame.repository.CategoryRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -63,5 +64,14 @@ public class CategoryService {
         log.info("saved object: [{}]", saved);
 
         return converter.fromEntityToDto(saved);
+    }
+
+    @Transactional
+    public void deleteCategoryById(Long idOfCategoryToDelete) {
+        log.info("deleting category with id: [{}]", idOfCategoryToDelete);
+
+        if (repository.existsById(idOfCategoryToDelete)) {
+            repository.deleteById(idOfCategoryToDelete);
+        }
     }
 }
