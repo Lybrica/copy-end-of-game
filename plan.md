@@ -8,7 +8,7 @@ Subject:
 
 ####Personal Expenses business requirements:
 1. track expenses
-   1. add categories
+   1. manage categories
    2. add bills
    3. check expenses per categories
 2. track incomes
@@ -34,3 +34,17 @@ Subject:
 ###Technical requirements
 1. Heroku cloud deploy
 2. Security
+
+###How to implement feature
+1. Create entity
+2. Create repository
+3. Create dto object
+4. Create converter
+5. Create service
+   1. Implement all required methods
+      1. for read all
+      2. read by id
+      3. update
+      4. delete
+      5. create
+6. Create controllers methods
