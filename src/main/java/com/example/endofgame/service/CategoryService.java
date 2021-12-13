@@ -3,9 +3,12 @@ package com.example.endofgame.service;
 import com.example.endofgame.converter.CategoryConverter;
 import com.example.endofgame.dto.CategorySummary;
 import com.example.endofgame.entity.Category;
+import com.example.endofgame.exception.DeletingNonExistentObject;
+import com.example.endofgame.exception.DuplicateCategoryException;
 import com.example.endofgame.repository.CategoryRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -46,15 +49,25 @@ public class CategoryService {
         return result;
     }
 
+    // from Kotlin
+    // String one =
+    // String? two =
+    // Optional<CategorySummary>
     public Optional<CategorySummary> readCategoryById(Long myId) {
-        // TODO: add good logs here
         var result = repository.findById(myId);
         log.info("item with id: [{}] exists? - [{}]", myId, result.isPresent());
         log.debug("received category: [{}]", result.orElse(null));
         return result.map(category -> converter.fromEntityToDto(category));
     }
 
+    @Transactional
     public CategorySummary createNewCategory(CategorySummary newCategory) {
+
+        if (repository.existsByName(newCategory.name())) {
+            var exception = new DuplicateCategoryException(String.format("Category with name: [%s] already exists!!!", newCategory.name()));
+            log.warn("problem with creation of new category", exception);
+            throw exception;
+        }
         Category toSave = converter.fromDtoToEntity(newCategory);
         Category saved = repository.save(toSave);
 
@@ -67,11 +80,15 @@ public class CategoryService {
     }
 
     @Transactional
-    public void deleteCategoryById(Long idOfCategoryToDelete) {
+    public void deleteCategoryById(Long idOfCategoryToDelete) throws DeletingNonExistentObject {
         log.info("deleting category with id: [{}]", idOfCategoryToDelete);
 
         if (repository.existsById(idOfCategoryToDelete)) {
             repository.deleteById(idOfCategoryToDelete);
+        } else {
+            var exception = new DeletingNonExistentObject(String.format("You're trying to delete non existent category with id: [%d]", idOfCategoryToDelete));
+            log.warn("problem with deleting category", exception);
+            throw exception;
         }
     }
 }
