@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All categories</title>
+</head>
+<body>
+    <h3>All categories</h3>
+
+    <table>
+        <thead>
+            <tr>
+                <td>Category name</td>
+                <td>Creation timestamp</td>
+                <td>Update timestamp</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="cat: ${categories}">
+                <td th:text="${cat.name()}">Shopping</td>
+                <td th:text="${cat.created()}">2021-10-21</td>
+                <td th:text="${cat.updated()}">2021-10-21</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
