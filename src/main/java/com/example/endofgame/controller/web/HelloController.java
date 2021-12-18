@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Slf4j
 public class HelloController {
 
+    // /first?login=maniek&password=12345
+    // parameters are put after ? char
     @GetMapping("/first")
     public String hello(@RequestParam(value = "login", required = false) String login,
                         @RequestParam(value = "password", defaultValue = "not-provided") String password,

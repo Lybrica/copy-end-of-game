@@ -1,28 +1,34 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>All categories</title>
+  <meta charset="UTF-8">
+  <title>All categories</title>
 </head>
 <body>
-    <h3>All categories</h3>
+  <h3>All categories</h3>
 
-    <table>
-        <thead>
-            <tr>
-                <td>Category name</td>
-                <td>Creation timestamp</td>
-                <td>Update timestamp</td>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="cat: ${categories}">
-                <td th:text="${cat.name()}">Shopping</td>
-                <td th:text="${cat.created()}">2021-10-21</td>
-                <td th:text="${cat.updated()}">2021-10-21</td>
-                <td><a th:href="@{'/web/delete-category/' + ${cat.id()}}" href="#">Delete category</a></td>
-            </tr>
-        </tbody>
-    </table>
+  <p><a href="#" th:href="@{/web/create-category}">Create new category</a></p>
+  <table>
+    <thead>
+      <tr>
+        <td>Category name</td>
+        <td>Creation timestamp</td>
+        <td>Update timestamp</td>
+        <td>Delete</td>
+      </tr>
+    </thead>
+    <tbody>
+<!--    enhanced for loop
+        for (CategorySummary cat: categories)
+-->
+      <tr th:each="cat: ${categories}">
+        <td th:text="${cat.name()}">Shopping</td>
+        <td th:text="${#temporals.format(cat.created(), 'dd-MM-yyyy')}"></td>
+        <td th:text="${#temporals.format(cat.updated(), 'dd-MM-yyyy')}"></td>
+        <td><a th:href="@{'/web/delete-category/' + ${cat.id()}}" href="#">Delete me</a></td>
+        <td><a th:href="@{'/web/edit-category/' + ${cat.id()}}" href="#">Edit me</a></td>
+      </tr>
+    </tbody>
+  </table>
 </body>
 </html>
