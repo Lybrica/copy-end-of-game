@@ -14,6 +14,7 @@ public class CategoryWebController {
 
     private static final String CATEGORIES_KEY = "categories";
     private static final String CATEGORY = "category";
+    private static final String ACTION = "action";
     private final CategoryService categoryService;
     private final CategorySummary emptyCategory = new CategorySummary(null, null, null, null);
 
@@ -30,17 +31,20 @@ public class CategoryWebController {
 
 
     @GetMapping("/create-category")
-    public String showCategoryForm() {
-
-        return "categories/add-category-page";
+    public String showAddCategoryForm(Model data) {
+        data.addAttribute(ACTION, "Add new");
+        data.addAttribute(CATEGORY, emptyCategory);
+        return "categories/add-edit-category-page";
     }
 
     @GetMapping("/edit-category/{id}")
     public String showEditCategoryForm(@PathVariable("id") Long categoryId, Model data) {
-        log.info("trying to edit category wiht id: [{}]", categoryId);
+        log.info("trying to edit category with id: [{}]", categoryId);
         var category = categoryService.readCategoryById(categoryId);
         data.addAttribute(CATEGORY, category.orElse(emptyCategory));
-        return "categories/add-category-page";
+        data.addAttribute(ACTION, "Edit");
+
+        return "categories/add-edit-category-page";
     }
 
     @PostMapping("/save-category")
