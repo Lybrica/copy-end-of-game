@@ -27,6 +27,14 @@ public class CategoryWebController {
         return "categories/all-categories";
     }
 
+
+    @GetMapping("/create-category")
+    public String showCategoryForm() {
+
+        return "categories/add-category-page";
+    }
+
+
     // delete-category/{id}
     @GetMapping("delete-category/{id}")
     public String deleteCategoryById(@PathVariable("id") Long id) {
