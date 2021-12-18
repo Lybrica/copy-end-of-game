@@ -1,5 +1,6 @@
 package com.example.endofgame.controller.web;
 
+import com.example.endofgame.dto.CategorySummary;
 import com.example.endofgame.service.CategoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -33,8 +34,10 @@ public class CategoryWebController {
     }
 
     @PostMapping("/save-category")
-    public String saveNewCategory(@RequestParam("name") String newCategoryName) {
-        log.info("new category name: [{}]", newCategoryName);
+    public String saveNewCategory(CategorySummary newCategory) {
+        log.info("new category: [{}]", newCategory);
+
+        categoryService.createNewCategory(newCategory);
         return "redirect:/web/all-categories";
     }
 
