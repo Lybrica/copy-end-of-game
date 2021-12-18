@@ -7,9 +7,9 @@
 <body>
 <h2 th:text="${action} + ' category'">Add new category</h2>
 <form action="#" th:action="@{/web/save-category}" method="post" th:object="${category}">
-    <input type="hidden" name="id" th:value="*{id()}">
-    <label for="categoryName">Category name:</label><br>
-    <input type="text" id="categoryName" name="name" value="" th:value="*{name()}"><br>
+    <input type="hidden" th:field="*{id}">
+    <label th:for="name">Category name:</label><br>
+    <input type="text" th:field="*{name}"><br><br>
     <input type="submit" value="Submit">
 </form>
 </body>
