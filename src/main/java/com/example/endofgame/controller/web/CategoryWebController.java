@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.*;
 public class CategoryWebController {
 
     private static final String CATEGORIES_KEY = "categories";
+    private static final String CATEGORY = "category";
     private final CategoryService categoryService;
+    private final CategorySummary emptyCategory = new CategorySummary(null, null, null, null);
 
     public CategoryWebController(final CategoryService categoryService) {
         this.categoryService = categoryService;
@@ -30,6 +32,14 @@ public class CategoryWebController {
     @GetMapping("/create-category")
     public String showCategoryForm() {
 
+        return "categories/add-category-page";
+    }
+
+    @GetMapping("/edit-category/{id}")
+    public String showEditCategoryForm(@PathVariable("id") Long categoryId, Model data) {
+        log.info("trying to edit category wiht id: [{}]", categoryId);
+        var category = categoryService.readCategoryById(categoryId);
+        data.addAttribute(CATEGORY, category.orElse(emptyCategory));
         return "categories/add-category-page";
     }
 
